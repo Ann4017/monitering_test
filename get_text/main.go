@@ -1,13 +1,10 @@
 package main
 
 import (
-	"fmt"
-	"monitering/db"
-	"monitering/http"
+	"get_text/db"
 )
 
 func main() {
-	http.Test1()
-	db := db.DB_info{}
-	fmt.Println(db)
+	info := db.DB_info{}
+	info.Get_text()
 }

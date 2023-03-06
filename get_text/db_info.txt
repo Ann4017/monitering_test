@@ -1,0 +1,6 @@
+uesr = root
+pwd = RLGH3qjs!!
+host = localhost
+port = 3306
+database = addrbook
+engine = mysql

@@ -1,31 +1,24 @@
 package db
 
 import (
-	"bufio"
 	"fmt"
-	"os"
+	"io/ioutil"
 )
 
 type DB_info struct {
-	s_id       string
+	s_uesr     string
 	s_pwd      string
-	s_url      string
-	s_engine   string
+	s_host     string
+	s_port     string
 	s_database string
+	s_engine   string
 }
 
-func (t *DB_info) Get_db_info() {
-	file, err := os.Open("db_info.txt")
+func (db *DB_info) Get_text() {
+	file, err := ioutil.ReadFile("db_info.txt")
 	if err != nil {
-		panic(err)
+		fmt.Println(err)
+		return
 	}
-	defer file.Close()
-
-	text := bufio.NewScanner(file)
-	for text.Scan() {
-		fmt.Println(text.Text())
-	}
-	if err := text.Err(); err != nil {
-		panic(err)
-	}
+	fmt.Println(string(file))
 }
