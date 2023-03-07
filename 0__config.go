@@ -4,12 +4,10 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
-
-	"../monitering_test/db"
 )
 
 func main() {
-	info := &db.DB_info{}
+	info := &DB_info{}
 	err := info.Get_text()
 	if err != nil {
 		fmt.Println(err)
