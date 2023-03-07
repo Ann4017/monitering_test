@@ -2,8 +2,10 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
-	"strings"
+	"log"
+	"os"
+
+	"gopkg.in/ini.v1"
 )
 
 type DB_info struct {
@@ -15,35 +17,32 @@ type DB_info struct {
 	s_engine   string
 }
 
-func (d *DB_info) Get_text() error {
-	file, err := ioutil.ReadFile("db_info.txt")
+func (d *DB_info) Get_ini() error {
+	_, err := os.Stat("config.ini")
 	if err != nil {
-		return err
-	}
-
-	txt := string(file)
-	sliceTxt := strings.Split(txt, "\n")
-
-	for _, v := range sliceTxt {
-		slice := strings.Split(v, "=")
-		key := strings.TrimSpace(slice[0])
-		value := strings.TrimSpace(slice[1])
-		fmt.Printf("%s, %s\n", key, value)
-
-		switch key {
-		case "user":
-			d.s_user = value
-		case "pwd":
-			d.s_pwd = value
-		case "host":
-			d.s_host = value
-		case "port":
-			d.s_port = value
-		case "database":
-			d.s_database = value
-		case "engine":
-			d.s_engine = value
+		file_path := "config.ini"
+		file, err := os.Create(file_path)
+		if err != nil {
+			fmt.Println(err)
+			return err
 		}
+		defer file.Close()
 	}
-	return nil
+
+	file, err := ini.Load("config.ini")
+	if err != nil {
+		fmt.Println(err)
+		log.Fatal(err)
+	}
+
+	sec := file.Section("dbinfo")
+
+	d.s_user = sec.Key("user").String()
+	d.s_pwd = sec.Key("pwd").String()
+	d.s_host = sec.Key("host").String()
+	d.s_port = sec.Key("port").String()
+	d.s_database = sec.Key("database").String()
+	d.s_engine = sec.Key("engine").String()
+
+	return err
 }
