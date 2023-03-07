@@ -3,8 +3,9 @@ package main
 import (
 	"database/sql"
 	"fmt"
-	"get_text/db"
 	"log"
+
+	"../monitering_test/db"
 )
 
 func main() {
