@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	info := db.DB_info{}
+	info := &db.DB_info{}
 	err := info.Get_text()
 	if err != nil {
 		fmt.Println(err)
