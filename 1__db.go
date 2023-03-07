@@ -27,6 +27,7 @@ func (d *DB_info) Get_ini() error {
 			return err
 		}
 		defer file.Close()
+		os.Exit(0)
 	}
 
 	file, err := ini.Load("config.ini")
